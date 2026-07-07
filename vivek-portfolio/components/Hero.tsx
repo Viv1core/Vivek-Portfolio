@@ -178,22 +178,27 @@ export default function Hero() {
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.95, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-10 flex flex-wrap gap-4"
-        >
-          
-            href="#projects"
-            data-cursor="view"
-            className="btn-magnetic btn-magnetic-primary"
-          >
-            View Work
-          </a>
-          <a href="#contact" data-cursor="hover" className="btn-magnetic">
-            Start A Project
-          </a>
-        </motion.div>
+  initial={{ opacity: 0, y: 16 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.95, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+  className="mt-10 flex flex-wrap gap-4"
+>
+  <a
+    href="#projects"
+    data-cursor="view"
+    className="btn-magnetic btn-magnetic-primary"
+  >
+    View Work
+  </a>
+
+  <a
+    href="#contact"
+    data-cursor="hover"
+    className="btn-magnetic"
+  >
+    Start A Project
+  </a>
+</motion.div>
       </div>
 
       {/* Credibility dashboard */}
