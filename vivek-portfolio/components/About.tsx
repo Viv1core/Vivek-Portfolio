@@ -1,62 +1,133 @@
-import Image from "next/image";
-import { skills } from "@/lib/config";
-import Reveal from "@/components/RevealText";
+"use client";
+
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function About() {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  const rotate = useTransform(scrollYProgress, [0, 1], [0, 180]);
+  const lineDraw = useTransform(scrollYProgress, [0, 0.6], [0, 1]);
+
   return (
-    <section id="about" className="relative bg-surface px-6 py-28 md:px-10 md:py-40">
-      <div className="grid grid-cols-1 gap-14 md:grid-cols-12 md:gap-8">
-        <Reveal className="md:col-span-5">
-          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-md bg-bg">
-            <Image
-              src="/images/profile.jpg"
-              alt="Portrait of Vivek Mishra"
-              fill
-              sizes="(min-width: 768px) 40vw, 90vw"
-              className="object-cover grayscale transition-all duration-700 hover:grayscale-0"
+    <section
+      ref={sectionRef}
+      id="about"
+      className="relative overflow-hidden bg-[var(--color-black)] px-6 py-28 sm:px-14 sm:py-40"
+    >
+      <div className="pointer-events-none absolute right-6 top-16 opacity-30 sm:right-16">
+        <motion.svg
+          width="72"
+          height="72"
+          viewBox="0 0 72 72"
+          style={{ rotate }}
+        >
+          {Array.from({ length: 6 }).map((_, i) => (
+            <rect
+              key={i}
+              x="34"
+              y="6"
+              width="4"
+              height="28"
+              fill="var(--color-red)"
+              transform={`rotate(${i * 60} 36 36)`}
+              opacity={0.7}
             />
-            <div className="pointer-events-none absolute inset-0 border border-white/10" />
-          </div>
-        </Reveal>
+          ))}
+        </motion.svg>
+      </div>
 
-        <div className="md:col-span-7">
-          <Reveal>
-            <span className="mb-6 block font-mono text-xs uppercase tracking-widest2 text-accent">
-              About
-            </span>
-            <h2 className="mb-8 font-display text-clamp-h2 leading-[0.92] text-ink text-balance">
-              I don&apos;t just edit footage — I build the version of the story that gets remembered.
-            </h2>
-          </Reveal>
+      <div className="mx-auto max-w-3xl">
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.6 }}
+          transition={{ duration: 0.7 }}
+          className="eyebrow mb-6"
+        >
+          About
+        </motion.p>
 
-          <Reveal delay={0.1}>
-            <div className="max-w-xl space-y-5 text-sm leading-relaxed text-ink-muted md:text-base">
-              <p>
-                I started editing with nothing but a phone and a rough idea of pacing. Every project
-                since has been about the same instinct: cut what doesn&apos;t earn its place, and hold
-                onto the frame that does.
-              </p>
-              <p>
-                My work sits at the intersection of story structure and motion — treating pacing,
-                sound, and typography as one language rather than separate crafts. No templated
-                transitions, no filler. Just intentional cuts.
-              </p>
-            </div>
-          </Reveal>
+        <h2 className="font-display text-[10vw] leading-[0.98] sm:text-[3.6rem]">
+          <motion.span
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.6 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="block"
+          >
+            GOOD EDITING IS INVISIBLE.
+          </motion.span>
+          <motion.span
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.6 }}
+            transition={{
+              duration: 0.8,
+              delay: 0.12,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            className="block text-[var(--color-red)]"
+          >
+            GREAT EDITING IS UNFORGETTABLE.
+          </motion.span>
+        </h2>
 
-          <Reveal delay={0.2}>
-            <div className="mt-10 flex flex-wrap gap-3">
-              {skills.map((skill) => (
-                <span
-                  key={skill}
-                  className="rounded-full border border-white/15 px-4 py-2 font-mono text-[11px] uppercase tracking-widest2 text-ink"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </Reveal>
+        <div className="relative my-10 h-px w-full bg-[var(--color-white-faint)]">
+          <motion.div
+            className="absolute inset-y-0 left-0 bg-[var(--color-red)]"
+            style={{ scaleX: lineDraw, transformOrigin: "left" }}
+          />
         </div>
+
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.7 }}
+          className="text-[var(--color-white-dim)] sm:text-lg"
+        >
+          I don&apos;t just edit footage &mdash; I build the version of the
+          story people remember.
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.7, delay: 0.08 }}
+          className="mt-5 text-[var(--color-white-dim)] sm:text-lg"
+        >
+          Every frame should earn attention. Every cut should serve a
+          purpose.
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.7, delay: 0.16 }}
+          className="mt-5 text-[var(--color-white-dim)] sm:text-lg"
+        >
+          From short-form content to cinematic storytelling, I focus on
+          pacing, emotion, retention and visual impact.
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.7, delay: 0.24 }}
+          className="mt-5 text-[var(--color-white-dim)] sm:text-lg"
+        >
+          My work combines editing, motion design and storytelling into a
+          single experience that keeps audiences engaged and clients
+          growing.
+        </motion.p>
       </div>
     </section>
   );
